@@ -160,4 +160,25 @@ userRouter.get("/api/wishlist", auth, async (req, res) => {
   }
 });
 
+userRouter.get("/api/notifications", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.user);
+    res.json(user.notifications || []);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+userRouter.delete("/api/notifications/:notifId", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.user);
+    const notif = user.notifications.id(req.params.notifId);
+    notif.deleteOne();
+    user = await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = userRouter;

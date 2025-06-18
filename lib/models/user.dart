@@ -10,6 +10,7 @@ class User {
   final String token;
   final List<dynamic> cart;
   final List<dynamic> wishlist;
+  final List<dynamic> notifications; // <-- use plural
 
   User({
     required this.id,
@@ -21,6 +22,7 @@ class User {
     required this.token,
     required this.cart,
     required this.wishlist,
+    this.notifications = const [],
   });
 
   // Convert User to Map
@@ -34,7 +36,8 @@ class User {
       'type': type,
       'token': token,
       'cart': cart,
-      'wishlist': wishlist, // <-- Add this line
+      'wishlist': wishlist,
+      'notifications': notifications, // <-- use plural
     };
   }
 
@@ -58,6 +61,13 @@ class User {
       wishlist: map['wishlist'] != null
           ? List<dynamic>.from(map['wishlist'])
           : [],
+      notifications: map['notifications'] != null
+          ? List<Map<String, dynamic>>.from(
+              (map['notifications'] as List).map(
+                (x) => Map<String, dynamic>.from(x),
+              ),
+            )
+          : [],
     );
   }
 
@@ -77,6 +87,7 @@ class User {
     String? token,
     List<dynamic>? cart,
     List<dynamic>? wishlist,
+    List<dynamic>? notifications, // <-- use plural
   }) {
     return User(
       id: id ?? this.id,
@@ -88,6 +99,7 @@ class User {
       token: token ?? this.token,
       cart: cart ?? this.cart,
       wishlist: wishlist ?? this.wishlist,
+      notifications: notifications ?? this.notifications, // <-- use plural
     );
   }
 }

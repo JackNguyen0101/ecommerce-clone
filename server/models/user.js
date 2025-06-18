@@ -47,6 +47,16 @@ const userSchema = mongoose.Schema({
       ref: "Product",
     },
   ],
+  notifications: [
+    {
+      orderId: String,
+      status: String,
+      message: String,
+      images: [String],
+      date: Date,
+      read: { type: Boolean, default: false },
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

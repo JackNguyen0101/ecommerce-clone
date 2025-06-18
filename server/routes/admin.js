@@ -3,6 +3,7 @@ const adminRouter = express.Router();
 const admin = require("../middlewares/admin");
 const { Product } = require("../models/product");
 const Order = require("../models/order");
+const User = require("../models/user");
 
 //Adding product
 adminRouter.post("/admin/add-product", admin, async (req, res) => {
@@ -58,6 +59,21 @@ adminRouter.post("/admin/change-order-status", admin, async (req, res) => {
     let order = await Order.findById(id);
     order.status = status;
     order = await order.save();
+
+    const user = await User.findById(order.userId);
+
+    const productImages = order.products.map((p) => p.product.images[0]);
+    user.notifications = user.notifications || [];
+    user.notifications.push({
+      orderId: order._id,
+      status: order.status,
+      message: `Your order #${order._id} status has changed`,
+      images: productImages,
+      date: new Date(),
+      read: false,
+    });
+    await user.save();
+
     res.json(order);
   } catch (e) {
     res.status(500).json({ error: e.message });

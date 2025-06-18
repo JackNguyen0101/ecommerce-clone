@@ -1,4 +1,5 @@
 import 'package:ecommerce/constants/global_variables.dart';
+import 'package:ecommerce/features/account/screens/notification_screen.dart';
 import 'package:ecommerce/features/account/widgets/below_app_bar.dart';
 import 'package:ecommerce/features/account/widgets/orders.dart';
 import 'package:ecommerce/features/account/widgets/top_buttons.dart';
@@ -6,6 +7,10 @@ import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
+
+  void navigateToNotificationScreen(BuildContext context) {
+    Navigator.pushNamed(context, NotificationScreen.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +38,15 @@ class AccountScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Row(
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsetsGeometry.only(right: 15),
-                      child: Icon(Icons.notifications_outlined),
+                      padding: const EdgeInsets.only(right: 15),
+                      child: GestureDetector(
+                        onTap: () => navigateToNotificationScreen(context),
+                        child: const Icon(Icons.notifications_outlined),
+                      ),
                     ),
-                    Icon(Icons.search),
+                    const Icon(Icons.search),
                   ],
                 ),
               ),
@@ -49,13 +57,9 @@ class AccountScreen extends StatelessWidget {
       body: Column(
         children: const [
           BelowAppBar(),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           TopButtons(),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Orders(),
         ],
       ),

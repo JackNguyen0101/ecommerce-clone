@@ -1,5 +1,6 @@
 import 'package:ecommerce/common/screens/speech_screen.dart';
 import 'package:ecommerce/common/widgets/bottom_bar.dart';
+import 'package:ecommerce/features/account/screens/notification_screen.dart';
 import 'package:ecommerce/features/account/screens/wishlist_screen.dart';
 import 'package:ecommerce/features/address/screens/address_screen.dart';
 import 'package:ecommerce/features/admin/screens/add_products_screen.dart';
@@ -85,6 +86,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => WishlistScreen(),
+      );
+    case NotificationScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => NotificationScreen(),
       );
 
     default:
